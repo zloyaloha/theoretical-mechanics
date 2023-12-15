@@ -48,20 +48,10 @@ ax1.axis('equal')
 ax1.set(xlim=[-13, 13], ylim=[-13, 13])
 ax1.plot(X, Y)
 
-P, = ax1.plot(X[0], Y[0], marker='s')
+P, = ax1.plot(X[0], Y[0], marker='o')
 
 ArrowX = np.array([-0.2, 0, -0.2])
 ArrowY = np.array([0.1, 0, -0.1])
-
-# radius-vector---
-
-RVLine, = ax1.plot([0, X[0]], [0, Y[0]], 'purple')
-
-RVArrowX, RVArrowY = Rot2D(ArrowX, ArrowY, math.atan2(Y[0], X[0]))
-RVArrow, = ax1.plot(RVArrowX+X[0], RVArrowY+Y[0], 'purple')
-
-# radius-vector---
-
 
 #speed-----
 
@@ -82,6 +72,16 @@ AArrow, = ax1.plot(AArrowX+X[0]+AX[0], AArrowY+Y[0]+AY[0], 'blue')
 
 #acceleration-----
 
+# radius-vector---
+
+
+
+RVLine, = ax1.plot([0, X[0]], [0, Y[0]], 'purple')
+
+RVArrowX, RVArrowY = Rot2D(ArrowX, ArrowY, math.atan2(Y[0], X[0]))
+RVArrow, = ax1.plot(RVArrowX+X[0], RVArrowY+Y[0], 'purple')
+
+# radius-vector---
 
 #raduis------
 RX, RY = Rot2D(X[0]+VX[0]/W[0], Y[0]+VY[0]/W[0], Pi/2)  
@@ -95,10 +95,6 @@ RArrow, = ax1.plot(RArrowX+RX, RArrowY+RY, 'black')
 def anima(i):
     P.set_data(X[i], Y[i])
 
-    RVLine.set_data([0, X[i]], [0, Y[i]])
-    RVArrowX, RVArrowY = Rot2D(ArrowX, ArrowY, math.atan2(Y[i], X[i]))
-    RVArrow.set_data(RVArrowX+X[i], RVArrowY+Y[i])
-
     VLine.set_data([X[i], X[i]+VX[i]], [Y[i], Y[i]+VY[i]])
     VArrowX, VArrowY = Rot2D(ArrowX, ArrowY, math.atan2(VY[i], VX[i]))
     VArrow.set_data(VArrowX+X[i]+VX[i], VArrowY+Y[i]+VY[i])
@@ -107,8 +103,12 @@ def anima(i):
     AArrowX, AArrowY = Rot2D(ArrowX, ArrowY, math.atan2(AY[i], AX[i]))
     AArrow.set_data(AArrowX+X[i]+AX[i], AArrowY+Y[i]+AY[i])
 
+    RVLine.set_data([0, X[i]], [0, Y[i]])
+    RVArrowX, RVArrowY = Rot2D(ArrowX, ArrowY, math.atan2(Y[i], X[i]))
+    RVArrow.set_data(RVArrowX+X[i], RVArrowY+Y[i])
+
     RX, RY = Rot2D(VX[i] / W[i], VY[i] / W[i], Pi / 2)
-    RLine.set_data([X[i], X[i]+RX], [Y[i], Y[i]+RY])
+    RLine.set_data([X[i], X[i] + RX], [Y[i], Y[i]+RY])
     RArrowX, RArrowY = Rot2D(ArrowX, ArrowY, math.atan2(RY, RX))
     RArrow.set_data(RArrowX+X[i]+RX, RArrowY+Y[i]+RY)
 
